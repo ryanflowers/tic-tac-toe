@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  username    String    @unique
+}
+
+model Game {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  status    GameStatus @default(WAITING_FOR_PLAYER)
+  board     String    @default("---------")  // 9 characters representing the board
+  nextTurn  String    @default("X")         // X or O
+  moves     Move[]
+}
+
+model Move {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  game      Game     @relation(fields: [gameId], references: [id])
+  gameId    String
+  player    String   // X or O
+}
+
+enum GameStatus {
+  WAITING_FOR_PLAYER
+  IN_PROGRESS
+  X_WON
+  O_WON
+  DRAW
+}

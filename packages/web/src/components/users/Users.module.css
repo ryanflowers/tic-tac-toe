@@ -1,0 +1,44 @@
+
+.users {
+  margin: 2rem;
+}
+
+.usersList {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  width: 100%;
+  max-width: 500px;
+}
+
+.usersList {
+  list-style: none;
+  padding: 0;
+}
+
+.usersList li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.usersList li:last-child {
+  border-bottom: none;
+}
+
+.error {
+  color: #e53e3e;
+  margin-top: 1rem;
+}
+
+.createUser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem;
+}
+
+.createUser > * {
+  flex: auto;
+}
