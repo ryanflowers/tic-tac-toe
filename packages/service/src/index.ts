@@ -256,17 +256,49 @@ app.post(
         where: { id },
         data: {
           nextTurnPlayerId: otherGameUser?.id,
+          status: 'IN_PROGRESS',
           moves: {
             create: {
               cellIndex,
               playerId: currentGameUser.id
             }
-          }
+          },
+        },
+        include: {
+          moves: true
         }
       });
 
       // Now that we have the move update the game board, validate if the game is over
-      const 
+      // Create a matrix of the board
+      // Traverse the matrix to check for a winner
+      const moveMap = new Map<number, Move>();
+      result.moves.forEach((move) => {
+        moveMap.set(move.cellIndex, move);
+      }) 
+
+      const cellCount = result.board.split('').length;
+      const rowCount = Math.sqrt(cellCount);
+     
+      const matrix = new Array(rowCount).fill([]).map((_, index) => {
+        return Array.from({ length: rowCount }, (_, i) => moveMap.get(index * rowCount + i))
+      })
+
+      // TODO: Check this logic it doesnt check columns or diagonals and draw logic is missing
+      const currentWinner = matrix.some((row) => row.every((cell) => cell?.playerId === currentGameUser.id));
+      const otherWinner = matrix.some((row) => row.every((cell) => cell?.playerId === otherGameUser?.id));
+      const winner = currentWinner ? currentGameUser :  otherWinner ? otherGameUser : null;
+
+      if(winner) {
+        await prisma.game.update({
+          where: { id },
+          data: {
+            status: 'COMPLETED',
+            winnerId: winner.id
+          }
+        })
+      }
+
 
       res.status(201).json(result)
     } catch (error) {

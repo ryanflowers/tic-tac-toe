@@ -70,6 +70,7 @@ const GameBoard = ({
   return (
     <div>
       <div>User: {currentUser.username}</div>
+      <div>Status: {game.status}</div>
       <div>{ isMyTurn ? 'Your turn' : 'Waiting for opponent'}</div>
       <div className={styles.gameBoard}>
         {Cells}
