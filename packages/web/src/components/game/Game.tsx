@@ -46,13 +46,16 @@ const GameBoard = ({
     )
   }
  
-  // const moves = game.moves.reduce(() => {
-
-  // }, new Map<number, string>);
-  const Cells = game.board.split('').map((cell, index) => {
+  const cellIndexMovesMap = game.moves.reduce((acc, move) => {
+    acc.set(move.cellIndex, move.player.playerKey)
+    return acc
+  }, new Map<number, string>());
+  
+  const Cells = game.board.split('').map((_, index) => {
+    const playerKey = cellIndexMovesMap.get(index) || '';
     return (
       <div key={index} className={styles.cell}>
-        {index}
+        {playerKey}
       </div>
     )
   })

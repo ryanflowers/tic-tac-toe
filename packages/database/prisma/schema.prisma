@@ -50,6 +50,7 @@ model Move {
   gameId    String
   player    GameUser @relation(fields: [playerId], references: [id])
   playerId  String
+  cellIndex Int
 }
 
 enum GameStatus {
