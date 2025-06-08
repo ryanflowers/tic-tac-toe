@@ -13,21 +13,17 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": ["./src/*"],
-      "@tic-tac-toe/*": ["../../packages/*/src"]
+      "@tic-tac-toe/database": ["../database/src"],
+      "@tic-tac-toe/service": ["../service/src"]
     },
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
