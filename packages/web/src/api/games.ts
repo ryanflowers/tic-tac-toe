@@ -48,4 +48,27 @@ const createGame = async (userIds: string[]): Promise<Game> => {
   return response.json()
 }
 
-export { getGame, getUserGames, createGame } 
+/**
+ * Create a move on a game for a user
+ * @param id - The id of the game
+ * @param cellIndex - The index of the cell to move on
+ * @param userId - The id of the user making the move
+ * @returns The created move
+ */
+const createMove = async ({id, cellIndex, userId}: {id: string, cellIndex: number, userId: string}): Promise<Game> => {
+  const response = await fetch(`${getApiUrl()}/games/${id}/moves`, {
+    method: 'POST',
+    body: JSON.stringify({cellIndex, userId}),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to create move')
+  }
+
+  return response.json()
+}
+
+export { getGame, getUserGames, createGame, createMove } 

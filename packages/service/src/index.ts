@@ -210,6 +210,72 @@ app.get(
   }
 )
 
+// Create a game move
+app.post(
+  '/games/:id/moves',
+  async (
+    req: Request<{id: string}, {}, { cellIndex: number, userId: string }>,
+    res: Response<Game | ErrorResponse>
+  ) => {
+    const { id } = req.params
+
+    const { cellIndex, userId } = req.body
+
+    if (!id) {
+      res.status(400).json({ errors: ['Game ID is required'] })
+      return
+    }
+
+    if (cellIndex === undefined || !userId) {
+      res.status(400).json({ errors: ['Cell index and user ID are required'] })
+      return
+    }
+
+    try {
+      const gameUsers = await prisma.gameUser.findMany({
+        where: {
+          gameId: id,
+        },
+      })
+
+      if(gameUsers.length !== 2) {
+        res.status(400).json({ errors: ['Unable to find user for game'] })
+        return
+      }
+
+      const currentGameUser = gameUsers.find((gameUser) => gameUser.userId === userId)
+      if(!currentGameUser) {
+        res.status(400).json({ errors: ['Unable to find current user for game'] })
+        return
+      }
+
+      const otherGameUser = gameUsers.find((gameUser) => gameUser.userId !== userId)
+
+      // Now that we have the move update the game nextTurnPlayer
+      const result = await prisma.game.update({
+        where: { id },
+        data: {
+          nextTurnPlayerId: otherGameUser?.id,
+          moves: {
+            create: {
+              cellIndex,
+              playerId: currentGameUser.id
+            }
+          }
+        }
+      });
+
+      // Now that we have the move update the game board, validate if the game is over
+      const 
+
+      res.status(201).json(result)
+    } catch (error) {
+      console.error('Error creating move:', error)
+      res.status(500).json({ errors: ['Failed to create move'] })
+    }
+  }
+)
+
 process.on('beforeExit', async () => {
   await prisma.$disconnect()
   console.log('Service stopped')

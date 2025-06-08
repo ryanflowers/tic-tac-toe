@@ -2,11 +2,21 @@
     display: grid;
     grid-template-columns: repeat(3, max-content);
     grid-template-rows: repeat(3, max-content);
-    gap: 10px;
+    gap: 2px;
+    background-color: #000;
 }
 
 .cell {
     border: 1px solid #000;
     height: 100px;
     width: 100px;
+    background-color: #fff;
+}
+
+.cell button {
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
 }

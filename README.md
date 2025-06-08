@@ -18,6 +18,8 @@ NOTES
 - Tests are not present as I ran out of time. I can dive into my testing philosophy if interested. One thing to note about the split I tend to make in containers and dumb renderers is that it makes testing really slick. As a rule of thumb I only make this split i I have 3 or more lines of content rendered from a component. 
 - Would use a component lib of some kind along with proper design tokens for theme, typography etc. I didnt want to pull in some lib wrote it raw to keep it simple. 
 - Used react context to store the current user. As application state grows and knowledge of those values spreads a store that is more granular in subscriptions will become necessary but this works for now.
+- For scaling would add Redis at the service level to remove read pressure for db if many users
+- Would use server events for realtime updates instead of interval pull as to not have pressure on the servers.
 
 Things I hate
 

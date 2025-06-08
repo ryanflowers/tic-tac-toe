@@ -19,7 +19,7 @@ const GameBoard = ({
   /**
    * The function to make a move
    */
-  onCreateMove: () => void
+  onCreateMove: ({id, cellIndex, userId}: {id: string, cellIndex: number, userId: string}) => void
   /**
    * Whether the game is loading
    */
@@ -55,13 +55,21 @@ const GameBoard = ({
     const playerKey = cellIndexMovesMap.get(index) || '';
     return (
       <div key={index} className={styles.cell}>
-        {playerKey}
+        <button onClick={() => {
+          if(!isMyTurn) {
+            alert('Sorry not your turn')
+            return
+          }
+
+          onCreateMove({id: game.id, cellIndex: index, userId: currentUser.id})
+        }}>{playerKey}</button>
       </div>
     )
   })
 
   return (
     <div>
+      <div>User: {currentUser.username}</div>
       <div>{ isMyTurn ? 'Your turn' : 'Waiting for opponent'}</div>
       <div className={styles.gameBoard}>
         {Cells}
