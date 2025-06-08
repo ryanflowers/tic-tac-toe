@@ -1,36 +1,39 @@
-import type { User } from '@tic-tac-toe/database';
+import type { User } from '@tic-tac-toe/database'
+import { getApiUrl } from './endpoints'
 
-const API_URL = 'http://localhost:3001';
-
-// React query requires throwing errors for non-200 responses, not a fan :(
-
+/**
+ * Get all users
+ * @returns A list of users
+ */
 const getUsers = async (): Promise<User[]> => {
-  const response = await fetch(`${API_URL}/users`);
-  
+  const response = await fetch(`${getApiUrl()}/users`)
+
   if (!response.ok) {
-    throw new Error('Failed to fetch users');
+    throw new Error('Failed to fetch users')
   }
 
-  return response.json();
-};
+  return response.json()
+}
 
+/**
+ * Create a new user
+ * @param username - The username of the user
+ * @returns The created user
+ */
 const createUser = async (username: string): Promise<User> => {
-  const response = await fetch(`${API_URL}/users`, {
+  const response = await fetch(`${getApiUrl()}/users`, {
     method: 'POST',
     body: JSON.stringify({ username }),
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })
 
   if (!response.ok) {
-    throw new Error('Failed to create user');
+    throw new Error('Failed to create user')
   }
 
-  return response.json();
+  return response.json()
 }
 
-export {
-  getUsers,
-  createUser,
-}
+export { getUsers, createUser }

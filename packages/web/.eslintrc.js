@@ -19,12 +19,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    '@typescript-eslint',
-    'jsx-a11y',
-  ],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'jsx-a11y'],
   settings: {
     react: {
       version: 'detect',
@@ -41,4 +36,4 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
   },
   ignorePatterns: ['dist', 'node_modules', '*.js'],
-};
+}

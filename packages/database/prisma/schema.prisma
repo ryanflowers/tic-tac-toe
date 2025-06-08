@@ -3,7 +3,8 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated"
+  output   = "../src/generated/client"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -12,18 +13,34 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(uuid())
-  createdAt   DateTime  @default(now())
-  username    String    @unique
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  username  String     @unique
+  games     GameUser[]
+}
+
+model GameUser {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  game          Game     @relation("GamePlayers", fields: [gameId], references: [id])
+  gameId        String
+  nextTurnGames Game[]   @relation("NextTurnPlayer")
+  moves         Move[]
+  playerKey     String // X or O
 }
 
 model Game {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  status    GameStatus @default(WAITING_FOR_PLAYER)
-  board     String    @default("---------")  // 9 characters representing the board
-  nextTurn  String    @default("X")         // X or O
-  moves     Move[]
+  id               String     @id @default(uuid())
+  createdAt        DateTime   @default(now())
+  status           GameStatus @default(WAITING_FOR_PLAYER)
+  board            String     @default("---------") // 9 characters representing the board
+  nextTurnPlayer   GameUser?   @relation("NextTurnPlayer", fields: [nextTurnPlayerId], references: [id])
+  nextTurnPlayerId String?
+  moves            Move[]
+  players          GameUser[] @relation("GamePlayers")
+  name             String
 }
 
 model Move {
@@ -31,7 +48,8 @@ model Move {
   createdAt DateTime @default(now())
   game      Game     @relation(fields: [gameId], references: [id])
   gameId    String
-  player    String   // X or O
+  player    GameUser @relation(fields: [playerId], references: [id])
+  playerId  String
 }
 
 enum GameStatus {

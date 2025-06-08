@@ -1,9 +1,6 @@
 module.exports = {
   root: true,
-  extends: [
-    'eslint:recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'prettier'],
   env: {
     node: true,
     es2021: true,
@@ -13,4 +10,4 @@ module.exports = {
     sourceType: 'module',
   },
   ignorePatterns: ['dist', 'node_modules', '*.js'],
-};
+}

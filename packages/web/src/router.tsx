@@ -1,9 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
-import HomePage from './pages/HomePage'
-import GamePage from './pages/GamePage'
-import ErrorPage from './pages/ErrorPage'
-import GamesPage from './pages/GamesPage'
+import HomePage from './pages/home/HomePage'
+import GamePage from './pages/game/GamePage'
+import GamesPage from './pages/games/GamesPage'
+
+// Define the expected query parameters for each route
+export interface GamesSearchParams {
+  userId?: string;
+}
+
+const ErrorPage = () => {
+  return <div>Rut Roh! Something went wrong.</div>
+}
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +28,7 @@ export const router = createBrowserRouter([
         element: <GamesPage />,
       },
       {
-        path: 'game/:id',
+        path: 'games/:id',
         element: <GamePage />,
       },
     ],

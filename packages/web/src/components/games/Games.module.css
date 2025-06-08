@@ -1,0 +1,61 @@
+
+.games {
+  margin: 2rem;
+}
+
+.gamesList {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.gamesList {
+  list-style: none;
+  padding: 0;
+}
+
+.gamesList li {
+  padding: 0.5rem;
+  border-bottom: 2px solid #ffffff;
+  background-color: #f5f5f5;
+}
+
+.gamesList li:hover {
+  background-color: #e5e5e5;
+}
+
+.gamesList li:last-child {
+  border-bottom: none;
+}
+
+.createGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem;
+}
+
+.createGame > * {
+  flex: auto;
+}
+
+.gameLink {
+  display: block;
+}
+
+.createGame {
+  margin: 2rem;
+}
+
+.usersList {
+  list-style: none;
+  padding: 0;
+}
+
+.userCheckbox {
+  margin-right: 1rem;
+}

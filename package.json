@@ -31,10 +31,10 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.8",
     "typescript": "^5.0.2",
-    "prisma": "^6.9.0"
+    "prisma": "5.10.2"
   },
   "dependencies": {
-    "@prisma/client": "^6.9.0",
+    "@prisma/client": "5.10.2",
     "@tanstack/react-query": "^5.80.6"
   }
 }
