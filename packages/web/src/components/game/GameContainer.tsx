@@ -18,7 +18,7 @@ const GameContainer = () => {
     queryKey: ['games', id],
     queryFn: () => getGame({ id: id ?? '' }),
     enabled: !!id,
-    refetchInterval: 2000, // Refetch data every 2 seconds, not ideal for scaling instead use server events
+    refetchInterval: 5000, // Refetch data every 5 seconds, not ideal for scaling instead use server events
   });
 
 

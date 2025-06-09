@@ -41,7 +41,14 @@ A full-stack tic-tac-toe application built with React and Node.js, demonstrating
    - Backend service (PORT=3001)
 
 5. **Load the Site**
-- http://localhost:3000/
+- Open brower window A and go to http://localhost:3000/
+- Create a couple users on the home screen
+- Select one of the users to impersonate
+- Create a game with both users
+- Open a second browser window B
+- Select the user not selected by browser A
+- Select the game created
+- Play tic tac toe
 
 ## TODOS
 This section holds some of the many things I didnt get the time to wrap up
