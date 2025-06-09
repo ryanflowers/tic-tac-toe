@@ -12,6 +12,16 @@ A full-stack tic-tac-toe application built with React and Node.js, demonstrating
 
 2. **Database Setup**
    - Make sure you have PostgreSQL installed and running locally
+   - You will need to set a username and password for your db and add them to the /database/.env -> DATABASE_URL string. For example here are the commands to set them on the db. Lets say you want user name USER_NAME and password MY_PASSWORD.
+  
+      # 1. Create the user (replace USER_NAME and MY_PASSWORD with your desired values)
+      psql postgres -c "CREATE USER \"USER_NAME\" WITH PASSWORD 'MY_PASSWORD';"
+
+      # 2. Grant privileges to the user
+      psql postgres -c "ALTER USER \"USER_NAME\" WITH SUPERUSER; GRANT ALL PRIVILEGES ON DATABASE tictactoe TO \"USER_NAME\";"
+
+      # 3. Update your .env file with the new credentia
+      echo 'DATABASE_URL="postgresql://USER_NAME:MY_PASSWORD@localhost:5432/tictactoe?schema=public"' > packages/database/.env
 
 3. **Initialize Database**
    ```bash
