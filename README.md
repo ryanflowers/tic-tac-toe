@@ -29,8 +29,7 @@ A full-stack tic-tac-toe application built with React and Node.js, demonstrating
 3. **Initialize Database**
    ```bash
    yarn db:generate    # Generate Prisma client
-   yarn db:migrate     # Create and apply database 
-migrations
+   yarn db:migrate     # Create and apply database migrations
    ```
 
 4. **Start the Development Servers**
