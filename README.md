@@ -17,10 +17,13 @@ A full-stack tic-tac-toe application built with React and Node.js, demonstrating
       # 1. Create the user (replace USER_NAME and MY_PASSWORD with your desired values)
       psql postgres -c "CREATE USER \"USER_NAME\" WITH PASSWORD 'MY_PASSWORD';"
 
-      # 2. Grant privileges to the user
+      # 2. Create the db named tictactoe
+      psql postgres -c "CREATE DATABASE tictactoe;"
+
+      # 3. Grant privileges to the user
       psql postgres -c "ALTER USER \"USER_NAME\" WITH SUPERUSER; GRANT ALL PRIVILEGES ON DATABASE tictactoe TO \"USER_NAME\";"
 
-      # 3. Update your .env file with the new credentia
+      # 4. Update your .env file with the new credentia
       echo 'DATABASE_URL="postgresql://USER_NAME:MY_PASSWORD@localhost:5432/tictactoe?schema=public"' > packages/database/.env
 
 3. **Initialize Database**
