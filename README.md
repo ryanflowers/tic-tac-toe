@@ -52,12 +52,14 @@ A full-stack tic-tac-toe application built with React and Node.js, demonstrating
 
 ## TODOS
 This section holds some of the many things I didnt get the time to wrap up
-- Add tests
+- Add current user selection to session state so its not lost on page refresh.
+- Add tests of course.
 - Fix typings. Somehow along the line I broke things and I dont have time to fix it. I am getting issues with the typings for the database for example in my imports. tsc :(
 - Simplify and cleanup A LOT
 - Validation of inputs on the UX
-- Add draw logic
+- Add draw logic for the game
 - Move to server events instead of polling
+- Put some time in the UI/Css as I didnt do much there its pretty ugly.
 
 ## Architecture & Design Decisions
 
