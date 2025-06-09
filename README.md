@@ -4,6 +4,42 @@ The goal of this exercise is to build a web-based Tic-Tac-Toe game that supports
 
 A full-stack tic-tac-toe application built with React and Node.js, demonstrating modern web development patterns and architectural decisions.
 
+## Getting Started
+1. **Install Dependencies**
+   ```bash
+   yarn install
+   ```
+
+2. **Database Setup**
+   - Make sure you have PostgreSQL installed and running locally
+
+3. **Initialize Database**
+   ```bash
+   yarn db:generate    # Generate Prisma client
+   yarn db:migrate     # Create and apply database 
+migrations
+   ```
+
+4. **Start the Development Servers**
+   ```bash
+   yarn dev
+   ```
+   This will start both:
+   - Web frontend (PORT=3000)
+   - Backend service (PORT=3001)
+
+5. **Load the Site**
+- http://localhost:3000/
+
+## TODOS
+This section holds some of the many things I didnt get the time to wrap up
+- Add tests
+- Fix typings. Somehow along the line I broke things and I dont have time to fix it. I am getting issues with the typings for the database for example in my imports. tsc :(
+- Simplify and cleanup A LOT
+- Validation of inputs on the UX
+- Add draw logic
+- Move to server events instead of polling
+
 ## Architecture & Design Decisions
 
 ### Frontend

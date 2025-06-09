@@ -1,8 +1,9 @@
-import type { Game, User, GameUser, Move, Prisma } from 'db'
+import type { Game, User, GameUser, Move, Prisma } from '@tic-tac-toe/database'
 
 export interface ErrorResponse {
   errors: string[]
 }
+
 
 export type GameWithRelations = Prisma.GameGetPayload<{
   include: {
@@ -24,4 +25,4 @@ export type GameWithRelations = Prisma.GameGetPayload<{
   }
 }>
 
-export type { Game, User, GameUser, Move }
+export type { Game, User, GameUser, Move, Prisma }

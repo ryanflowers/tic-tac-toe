@@ -28,6 +28,7 @@ const GameBoard = ({
 
   const { currentUser } = useAppContext()
   const isMyTurn = game?.nextTurnPlayer?.userId === currentUser?.id
+  const currentPlayer = game?.players.find((player) => player.userId === currentUser?.id)
 
   if (!currentUser) {
     return <div>No current user</div>
@@ -67,11 +68,18 @@ const GameBoard = ({
     )
   })
 
+  if(game.status === 'COMPLETED' && game.winnerId) {
+    return (
+      <div>
+        {game.winnerId === currentPlayer?.id ? 'You won!' : 'You lost!'}
+      </div>
+    )
+  }
+
   return (
     <div>
       <div>User: {currentUser.username}</div>
-      <div>Status: {game.status}</div>
-      <div>{ isMyTurn ? 'Your turn' : 'Waiting for opponent'}</div>
+      <div>{ isMyTurn ? 'Your turn!' : 'Waiting for opponent...'}</div>
       <div className={styles.gameBoard}>
         {Cells}
       </div>

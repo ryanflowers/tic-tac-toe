@@ -30,7 +30,6 @@ model GameUser {
   moves         Move[]
   playerKey     String // X or O
   winner        Game?    @relation("WinningPlayer")
-  winnerId      String?
 }
 
 model Game {
@@ -60,7 +59,5 @@ model Move {
 enum GameStatus {
   WAITING_FOR_PLAYER
   IN_PROGRESS
-  X_WON
-  O_WON
-  DRAW
+  COMPLETED
 }

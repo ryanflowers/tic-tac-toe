@@ -1,4 +1,8 @@
-import type { Prisma } from './generated/client/index.js'
+export * from './generated/client/index.js'
+export { PrismaClient, GameStatus } from './generated/client/index.js'
+import type { Prisma, Game, User, GameUser, Move } from './generated/client/index.js'
+
+export type { Prisma, Game, User, GameUser, Move }
 
 export type GameWithRelations = Prisma.GameGetPayload<{
   include: {
@@ -19,5 +23,3 @@ export type GameWithRelations = Prisma.GameGetPayload<{
     }
   }
 }>
-
-export * from './generated/client/index.js'

@@ -20,7 +20,11 @@
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "sourceMap": true,
-    "composite": true
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tic-tac-toe/*": ["../*/src"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

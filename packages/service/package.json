@@ -22,8 +22,7 @@
   "dependencies": {
     "@tic-tac-toe/database": "0.1.0",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "db": "link:../database/src/generated/client"
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

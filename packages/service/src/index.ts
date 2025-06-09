@@ -3,8 +3,8 @@ export * from './types.js'
 import express from 'express'
 import { type Request, type Response } from 'express'
 import cors from 'cors'
-import { PrismaClient } from 'db'
-import type { Game, GameUser, Move, User, GameWithRelations, ErrorResponse } from './types.js'
+import type { Game, Move, User, GameWithRelations, ErrorResponse, Prisma, GameUser } from './types.js'
+import { PrismaClient } from '@tic-tac-toe/database'
 
 console.log('Starting server...')
 
@@ -17,9 +17,9 @@ const port = process.env.PORT || 3001
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000', // Allow the web app to make requests to this service
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type'],
   })
 )
 
@@ -125,10 +125,10 @@ app.post(
         return
       }
 
-      const result = await prisma.$transaction(async (tx) => {
+      const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         const game = await tx.game.create({
           data: {
-            name: users.map((user) => user.username).join(' vs '),
+            name: users.map((user: User) => user.username).join(' vs '),
             players: {
               create: [
                 {
@@ -210,6 +210,57 @@ app.get(
   }
 )
 
+// TODO Simplify this function way to complicated there has to be a better way
+function checkWinner(matrix: (Move | null)[][]): Move | null {
+  if (matrix.length !== 3 || matrix.some(row => row.length !== 3)) {
+    return null;
+  }
+
+  // Check rows
+  for (const row of matrix) {
+    const first = row[0];
+    const second = row[1];
+    const third = row[2];
+    if (first && second && third && 
+        first.playerId === second.playerId && 
+        second.playerId === third.playerId) {
+      return first;
+    }
+  }
+
+  // Check columns
+  for (let i = 0; i < 3; i++) {
+    const first = matrix?.[0]?.[i];
+    const second = matrix?.[1]?.[i];
+    const third = matrix?.[2]?.[i];
+    if (first && second && third && 
+        first.playerId === second.playerId && 
+        second.playerId === third.playerId) {
+      return first;
+    }
+  }
+
+  // Check diagonals
+  const topLeft = matrix?.[0]?.[0];
+  const middle = matrix?.[1]?.[1];
+  const bottomRight = matrix?.[2]?.[2];
+  if (topLeft && middle && bottomRight && 
+      topLeft.playerId === middle.playerId && 
+      middle.playerId === bottomRight.playerId) {
+    return topLeft;
+  }
+
+  const topRight = matrix?.[0]?.[2];
+  const bottomLeft = matrix?.[2]?.[0];
+  if (topRight && middle && bottomLeft && 
+      topRight.playerId === middle.playerId && 
+      middle.playerId === bottomLeft.playerId) {
+    return topRight;
+  }
+
+  return null;
+}
+
 // Create a game move
 app.post(
   '/games/:id/moves',
@@ -243,13 +294,13 @@ app.post(
         return
       }
 
-      const currentGameUser = gameUsers.find((gameUser) => gameUser.userId === userId)
+      const currentGameUser = gameUsers.find((gameUser: GameUser) => gameUser.userId === userId)
       if(!currentGameUser) {
         res.status(400).json({ errors: ['Unable to find current user for game'] })
         return
       }
 
-      const otherGameUser = gameUsers.find((gameUser) => gameUser.userId !== userId)
+      const otherGameUser = gameUsers.find((gameUser: GameUser) => gameUser.userId !== userId)
 
       // Now that we have the move update the game nextTurnPlayer
       const result = await prisma.game.update({
@@ -270,35 +321,32 @@ app.post(
       });
 
       // Now that we have the move update the game board, validate if the game is over
-      // Create a matrix of the board
-      // Traverse the matrix to check for a winner
       const moveMap = new Map<number, Move>();
-      result.moves.forEach((move) => {
+      result.moves.forEach((move: Move) => {
         moveMap.set(move.cellIndex, move);
       }) 
 
       const cellCount = result.board.split('').length;
-      const rowCount = Math.sqrt(cellCount);
+      const rowColumnCount = Math.sqrt(cellCount);
      
-      const matrix = new Array(rowCount).fill([]).map((_, index) => {
-        return Array.from({ length: rowCount }, (_, i) => moveMap.get(index * rowCount + i))
+      const matrix = new Array(rowColumnCount).fill([]).map((_, index) => {
+        return Array.from({ length: rowColumnCount }, (_, i) => moveMap.get(index * rowColumnCount + i))
       })
 
-      // TODO: Check this logic it doesnt check columns or diagonals and draw logic is missing
-      const currentWinner = matrix.some((row) => row.every((cell) => cell?.playerId === currentGameUser.id));
-      const otherWinner = matrix.some((row) => row.every((cell) => cell?.playerId === otherGameUser?.id));
-      const winner = currentWinner ? currentGameUser :  otherWinner ? otherGameUser : null;
+      const winner = checkWinner(matrix);
+
+      // TODO Check for draw
 
       if(winner) {
+        console.log('=======================UPDATE GAME STATUS TO COMPLETED:' + winner.playerId) // TODO Remove this
         await prisma.game.update({
           where: { id },
           data: {
             status: 'COMPLETED',
-            winnerId: winner.id
+            winnerId: winner.playerId
           }
         })
       }
-
 
       res.status(201).json(result)
     } catch (error) {
