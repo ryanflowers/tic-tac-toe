@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createGame, getUserGames, getUsers } from '../../api'
 import { Games } from './Games'
 import { useSearchParams } from 'react-router-dom'
-import { useAppContext } from '@/context/AppContext'
+import { useAppContext } from '../../context/AppContext'
 
 const GamesContainer = () => {
   const [searchParams] = useSearchParams();

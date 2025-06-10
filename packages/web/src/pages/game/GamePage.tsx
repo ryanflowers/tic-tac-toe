@@ -1,4 +1,4 @@
-import { GameContainer } from '@/components/game/GameContainer'
+import { GameContainer } from '../../components/game/GameContainer'
 import styles from './Game.module.css'
 
 export default function GamePage() {

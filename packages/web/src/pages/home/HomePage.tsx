@@ -1,5 +1,5 @@
 import styles from './Home.module.css'
-import { UsersContainer } from '@/components/users/UsersContainer'
+import { UsersContainer } from '../../components/users/UsersContainer'
 
 export default function HomePage() {
   return (
