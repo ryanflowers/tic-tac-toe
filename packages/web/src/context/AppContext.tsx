@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-// import { type User } from '@tic-tac-toe/database';
-// Having issues importing the User type from the database package
-type User = any;
+import type { User } from '@tic-tac-toe/database';
 
 type AppContextType = {
   currentUser: User | null;

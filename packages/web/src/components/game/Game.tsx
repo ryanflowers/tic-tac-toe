@@ -62,16 +62,21 @@ const GameBoard = ({
             return
           }
 
+          if(cellIndexMovesMap.has(index)) {
+            alert('Cell already taken')
+            return
+          }
+
           onCreateMove({id: game.id, cellIndex: index, userId: currentUser.id})
         }}>{playerKey}</button>
       </div>
     )
   })
 
-  if(game.status === 'COMPLETED' && game.winnerId) {
+  if(game.status === 'COMPLETED') {
     return (
       <div>
-        {game.winnerId === currentPlayer?.id ? 'You won!' : 'You lost!'}
+        {!game.winnerId ? 'Draw!' : game.winnerId === currentPlayer?.id ? 'You won!' : 'You lost!'}
       </div>
     )
   }

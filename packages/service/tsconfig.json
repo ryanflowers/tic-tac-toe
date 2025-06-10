@@ -23,7 +23,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@tic-tac-toe/*": ["../*/src"]
+      "@tic-tac-toe/database": ["../database/src"]
     }
   },
   "include": ["src/**/*"],

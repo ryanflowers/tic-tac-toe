@@ -7,7 +7,8 @@ const config: UserConfig = {
   plugins: [react() as unknown as Plugin],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@tic-tac-toe/database': path.resolve(__dirname, '../database/src'),
+      '@tic-tac-toe/service': path.resolve(__dirname, '../service/src'),
     },
   },
   server: {

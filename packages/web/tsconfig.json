@@ -1,5 +1,4 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -16,13 +15,16 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"],
       "@tic-tac-toe/database": ["../database/src"],
-      "@tic-tac-toe/service": ["../service/src"]
+      "@tic-tac-toe/database/*": ["../database/src/*"],
+      "@tic-tac-toe/service": ["../service/src"],
+      "@tic-tac-toe/service/*": ["../service/src/*"]
     },
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "composite": true,
+    "baseUrl": "."
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

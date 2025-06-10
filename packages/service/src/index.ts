@@ -335,15 +335,19 @@ app.post(
 
       const winner = checkWinner(matrix);
 
-      // TODO Check for draw
-
       if(winner) {
-        console.log('=======================UPDATE GAME STATUS TO COMPLETED:' + winner.playerId) // TODO Remove this
         await prisma.game.update({
           where: { id },
           data: {
             status: 'COMPLETED',
             winnerId: winner.playerId
+          }
+        })
+      } else if(result.moves.length === cellCount) { // Draw
+        await prisma.game.update({
+          where: { id },
+          data: {
+            status: 'COMPLETED'
           }
         })
       }
